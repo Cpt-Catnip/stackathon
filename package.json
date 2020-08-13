@@ -13,5 +13,8 @@
     "express": "^4.17.1",
     "matter-js": "^0.14.2",
     "pixi.js": "^5.3.3"
+  },
+  "devDependencies": {
+    "prettier": "^2.0.5"
   }
 }
