@@ -4,6 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build-client": "webpack",
+    "build-client-watch": "webpack -w",
+    "lint": "eslint ./ --ignore-path .gitignore",
+    "lint-fix": "npm run lint -- --fix",
+    "prepare": "if [ -d .git ]; then npm-merge-driver install; fi",
+    "prettify": "prettier --write \"**/*.{js,jsx,json,css,scss,md}\"",
+    "seed": "echo \"Error: no seed file\" && exit 1",
+    "start": "node server",
+    "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
+    "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,6 +22,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "matter-js": "^0.14.2",
+    "morgan": "^1.10.0",
     "pixi.js": "^5.3.3"
   },
   "devDependencies": {
@@ -33,6 +44,7 @@
     "eslint": "^7.6.0",
     "eslint-config-fullstack": "^6.0.0",
     "eslint-config-prettier": "^6.11.0",
+    "nodemon": "^2.0.4",
     "prettier": "^2.0.5",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
