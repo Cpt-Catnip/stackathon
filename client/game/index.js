@@ -2,10 +2,10 @@ console.log('this is a thing!!!');
 import * as Matter from 'matter-js';
 import * as PIXI from 'pixi.js';
 
-var Engine = Matter.Engine,
-  Render = Matter.Render,
-  World = Matter.World,
-  Bodies = Matter.Bodies;
+// var Engine = Matter.Engine,
+//   Render = Matter.Render,
+//   World = Matter.World,
+//   Bodies = Matter.Bodies;
 
 // // create an engine
 // const engine = Engine.create();
@@ -18,7 +18,6 @@ var Engine = Matter.Engine,
 // //   height: 600,
 // // });
 
-// // create two boxes and a ground
 // const height = 300;
 // const COM = height * (1 / 3);
 // let ramp = Bodies.trapezoid(0, 600 - COM, 1600, height, 1, {
@@ -58,44 +57,45 @@ var Engine = Matter.Engine,
 // // rectangle.pivot.set(20, 20)
 // rectangle.position.set(400, 300);
 
-let app;
-let engine;
-let world;
-let ramp;
-function setup() {
-  // create canvas
-  app = new PIXI.Application({ width: 800, height: 600 });
-  document.getElementById('app').appendChild(app.view);
+// let app;
+// let engine;
+// let world;
+// let ramp;
+// function setup() {
+//   // create canvas
+//   app = new PIXI.Application({ width: 800, height: 600 });
+//   document.getElementById('app').appendChild(app.view);
 
-  // create game engine
-  engine = Engine.create();
-  world = engine.world;
+//   // create game engine
+//   engine = Engine.create();
+//   world = engine.world;
 
-  // create ramp
-  const height = 300;
-  const COM = height * (1 / 3);
-  let ramp = Bodies.trapezoid(0, 600 - COM, 1600, height, 1, {
-    isStatic: true,
-    friction: 0,
-  });
+//   // create ramp
+//   const height = 300;
+//   const COM = height * (1 / 3);
+//   let ramp = Bodies.trapezoid(0, 600 - COM, 1600, height, 1, {
+//     isStatic: true,
+//     friction: 0,
+//   });
 
-  let rampGraphic = new PIXI.Graphics();
-  rampGraphic.beginFill(0x66ccff);
-  rampGraphic.drawPolygon(
-    ramp.vertices.reduce((vertices, vertex) => {
-      vertices.push(...[vertex.x, vertex.y]);
-      return vertices;
-    }, [])
-  );
-  rampGraphic.endFill();
+//   let rampGraphic = new PIXI.Graphics();
+//   rampGraphic.beginFill(0x66ccff);
+//   rampGraphic.drawPolygon(
+//     ramp.vertices.reduce((vertices, vertex) => {
+//       vertices.push(...[vertex.x, vertex.y]);
+//       return vertices;
+//     }, [])
+//   );
+//   rampGraphic.endFill();
 
-  // add ramp to world
-  World.add(world, ramp)
-  app.stage.addChild(rampGraphic)
+//   // add ramp to world
+//   World.add(world, ramp)
+//   app.stage.addChild(rampGraphic)
 
-  Engine.run(engine);
+//   Engine.run(engine);
 
 
-}
+// }
 
-setup();
+export * from './world'
+export * from './particle'
