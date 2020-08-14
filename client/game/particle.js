@@ -1,7 +1,6 @@
 import { World, Bodies } from 'matter-js';
 import { Graphics } from 'pixi.js';
-import { engine } from './index';
-import { app } from './world';
+import { engine, app } from './index';
 
 const options = {
   friction: 0,
@@ -15,7 +14,6 @@ export class Particle {
     // add body to world
     World.add(engine.world, this.body);
 
-
     // create sprite
     this.graphic = new Graphics();
     this.graphic.beginFill(0x66ccff);
@@ -23,11 +21,11 @@ export class Particle {
     this.graphic.endFill();
 
     // add sprite to world
-    app.stage.addChild(this.graphic)
+    app.stage.addChild(this.graphic);
   }
 
   show() {
-    const pos = this.body.position
-    this.graphic.position.set(pos.x, pos.y)
+    const pos = this.body.position;
+    this.graphic.position.set(pos.x, pos.y);
   }
 }
