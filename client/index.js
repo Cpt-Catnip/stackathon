@@ -1,23 +1,34 @@
 import { Engine, Runner } from 'matter-js';
-import { app, engine, Particle, Chart } from './game';
+import {
+  app,
+  engine,
+  Particle,
+  Ground,
+  WORLD_HEIGHT,
+  WORLD_WIDTH,
+} from './game';
 
 let particles = [];
+let ground = [];
 let runner;
 let state;
 
 const setup = () => {
-  // add assets to game
-  document.getElementById('app').appendChild(app.view);
+  // add particle
   particles.push(new Particle(10, 10, 20));
+  particles.push(new Particle(10, 10, 20))
 
-  const plot = new Chart(680, 20);
+  // add ground
+  ground.push(
+    new Ground(0, WORLD_HEIGHT / 2, WORLD_WIDTH, WORLD_HEIGHT / 2)
+  );
+
+  // set game state
+  state = go;
 
   // start game loop
   runner = Engine.run(engine);
   app.ticker.add((delta) => gameLoop(delta));
-
-  // set game state
-  state = go;
 };
 
 const gameLoop = (delta) => {
