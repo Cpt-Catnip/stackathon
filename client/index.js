@@ -1,4 +1,4 @@
-import { Engine, Runner } from 'matter-js';
+import { Engine } from 'matter-js';
 import {
   app,
   engine,
@@ -9,18 +9,23 @@ import {
 } from './game';
 
 let particles = [];
-let ground = [];
+let bounds = [];
 let runner;
 let state;
 
 const setup = () => {
   // add particle
-  particles.push(new Particle(10, 10, 20));
-  particles.push(new Particle(10, 10, 20))
+  particles.push(new Particle(10, 311, 20));
 
   // add ground
-  ground.push(
-    new Ground(0, WORLD_HEIGHT / 2, WORLD_WIDTH, WORLD_HEIGHT / 2)
+  bounds.push(
+    new Ground(
+      WORLD_WIDTH / 2,
+      WORLD_HEIGHT,
+      2 * WORLD_WIDTH,
+      300,
+      15 * (Math.PI / 180)
+    )
   );
 
   // set game state
@@ -37,12 +42,23 @@ const gameLoop = (delta) => {
 
 const go = (delta) => {
   // move physics engine forward
-  // Engine.update(engine, app.ticker.elapsedMS);
+  // Engine.update(engine, app.ticker.elapsedMS, delta);
+  // console.log(app.ticker.FPS)
 
   // redraw particles
   particles.forEach((particle) => {
     particle.show();
   });
+
+  for (let i = 0; i < particles.length; i++) {
+    if (particles[i].body.position.x > WORLD_WIDTH + 50) {
+      particles.splice(i, 1);
+      i--;
+    }
+  }
+
+  // redraw boundaries
+  bounds.forEach((bound) => bound.show());
 };
 
 setup();

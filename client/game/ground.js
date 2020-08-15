@@ -1,5 +1,5 @@
 import { World, Bodies } from 'matter-js';
-import { Graphics } from 'pixi.js';
+import { Graphics, Sprite } from 'pixi.js';
 import { engine, app } from './index';
 
 const options = {
@@ -8,20 +8,35 @@ const options = {
 };
 
 export class Ground {
-  constructor(x, y, width, height) {
-    // create body with top edge as reference
-    this.body = Bodies.rectangle(x, y + height / 2, width, height);
+  constructor(x, y, width, height, angle = 0) {
+    // set angle
+    options.angle = angle;
+
+    // create physical object
+    this.body = Bodies.rectangle(x, y, width, height, options);
+
+    // make sprite
+    this.graphic = new Graphics();
+    this.graphic.beginFill(0x566573);
+    this.graphic.drawRect(x, y, width, height);
+    this.graphic.endFill();
+    this.graphic = app.renderer.generateTexture(this.graphic);
+    this.graphic = new Sprite(this.graphic);
+
+    this.graphic.anchor.set(0.5, 0.5);
+
+    // this.graphic.position.set(x, y);
+    this.graphic.rotation = angle;
 
     // add body to world
     World.add(engine.world, this.body);
 
-    // create sprite
-    this.graphic = new Graphics();
-    this.graphic.beginFill(0x2e4053);
-    this.graphic.drawRect(x, y + width / 2, width, height)
-    this.graphic.pivot.set(width / 2, height / 2);
+    // add texture to stage
+    app.stage.addChild(this.graphic);
+  }
 
-    // add sprite to world
-    app.stage.addChild(this.graphic)
+  show() {
+    const pos = this.body.position;
+    this.graphic.position.set(pos.x, pos.y);
   }
 }
