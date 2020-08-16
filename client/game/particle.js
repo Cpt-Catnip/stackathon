@@ -46,13 +46,10 @@ export class Particle {
     const s = [0];
     const v = [0];
 
-    // total distance to travel
-    const R = h / Math.sin(initialAngle);
-
     // create temp vars to hold previous state
     let sPrev, vPrev, tPrev;
 
-    // compute state for each moment in time
+    // compute state for each moment in time while box is on screen
     while (s[s.length - 1] * Math.cos(initialAngle) < WORLD_WIDTH) {
       tPrev = t[t.length - 1];
       vPrev = v[v.length - 1];
@@ -63,6 +60,7 @@ export class Particle {
       v.push(vPrev + a * dt);
     }
 
+    // save data to instance
     this.data.t = t;
     this.data.s = s;
     this.data.v = v;
@@ -87,6 +85,7 @@ export class Particle {
     // we know acceleration is constant, so we only need two data points
     if (i < 2) addData(acc, t, a);
 
+    // iterate i for next frame
     i++;
   }
 
