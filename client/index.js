@@ -1,4 +1,3 @@
-import { Engine } from 'matter-js';
 import {
   app,
   engine,
@@ -9,51 +8,33 @@ import {
 } from './game';
 
 let particle;
-let bounds = [];
+let ramp;
 let runner;
 let state;
 
-const setup = () => {
-  // add particle
-  particle = new Particle(10, 311, 20);
-
+const setup = (rampAngle) => {
   // add ground
-  bounds.push(
-    new Ground(
-      WORLD_WIDTH / 2,
-      WORLD_HEIGHT,
-      2 * WORLD_WIDTH,
-      300,
-      15 * (Math.PI / 180)
-    )
-  );
+  ramp = new Ground(rampAngle);
+
+  // add particle
+  particle = new Particle(rampAngle);
+  particle.show();
 
   // set game state
   state = go;
 
   // start game loop
-  runner = Engine.run(engine);
-  app.ticker.add((delta) => gameLoop(delta));
+  app.ticker.add(gameLoop);
 };
 
 const gameLoop = (delta) => {
   state(delta);
 };
 
+const compute = (delta) => {};
+
 const go = (delta) => {
-  // move physics engine forward
-  // Engine.update(engine, app.ticker.elapsedMS, delta);
-  // console.log(app.ticker.FPS)
-
-  // redraw particles
-  particle.show();
-
-  if (particle.body.position.x > WORLD_WIDTH + 50) {
-    particle.remove();
-  }
-
-  // redraw boundaries
-  bounds.forEach((bound) => bound.show());
+  if (particle.graphic.position.x < WORLD_WIDTH) particle.show()
 };
 
-setup();
+setup(30 * (Math.PI / 180));
