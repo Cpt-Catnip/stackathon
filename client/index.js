@@ -43,6 +43,7 @@ const animate = (delta) => {
   if (particle.graphic.position.x < WORLD_WIDTH) {
     particle.animate();
   } else {
+    particle.remove()
     app.ticker.remove(gameLoop);
   }
 };
