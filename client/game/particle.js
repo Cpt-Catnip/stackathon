@@ -67,7 +67,8 @@ export class Particle {
     this.data.a = Array(t.length).fill(a);
   }
 
-  animate() {
+  // step allows us to downsample and speed up the playback
+  animate(step = 1) {
     // constants
     const a = g * Math.sin(initialAngle);
     const s = this.data.s[i];
@@ -86,7 +87,7 @@ export class Particle {
     if (i < 2) addData(acc, t, a);
 
     // iterate i for next frame
-    i++;
+    i += step;
   }
 
   remove() {

@@ -13,7 +13,7 @@ let runner;
 let state;
 
 const setup = (rampAngle) => {
-  // make sure the ramp angle is on the range [0, 45]
+  // make sure the ramp angle is on the range [0, 45] degrees
   if (rampAngle < 0) rampAngle = 0;
   if (rampAngle > Math.PI / 4) rampAngle = Math.PI / 4;
 
