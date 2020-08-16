@@ -36,6 +36,6 @@ export class Particle {
 
   remove() {
     World.remove(engine.world, this.body);
-    app.stage.removeChildren(this.graphic);
+    this.graphic.parent.removeChild(this.graphic);
   }
 }

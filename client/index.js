@@ -8,14 +8,14 @@ import {
   WORLD_WIDTH,
 } from './game';
 
-let particles = [];
+let particle;
 let bounds = [];
 let runner;
 let state;
 
 const setup = () => {
   // add particle
-  particles.push(new Particle(10, 311, 20));
+  particle = new Particle(10, 311, 20);
 
   // add ground
   bounds.push(
@@ -46,15 +46,10 @@ const go = (delta) => {
   // console.log(app.ticker.FPS)
 
   // redraw particles
-  particles.forEach((particle) => {
-    particle.show();
-  });
+  particle.show();
 
-  for (let i = 0; i < particles.length; i++) {
-    if (particles[i].body.position.x > WORLD_WIDTH + 50) {
-      particles.splice(i, 1);
-      i--;
-    }
+  if (particle.body.position.x > WORLD_WIDTH + 50) {
+    particle.remove();
   }
 
   // redraw boundaries
