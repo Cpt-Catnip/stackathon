@@ -1,14 +1,16 @@
 import { Graphics, Sprite } from 'pixi.js';
 import { app, WORLD_HEIGHT, WORLD_WIDTH, g, s_t, v_t } from './index';
+import { pos, vel, acc, addData } from '../plotting';
 
 // closure
 const side = 100;
 let initialAngle;
 let h;
+let i = 0;
 
 export class Particle {
   constructor(angle) {
-    initialAngle = angle
+    initialAngle = angle;
 
     // create sprite
     this.graphic = new Graphics();
@@ -30,25 +32,62 @@ export class Particle {
     // console.log(this.graphic.position)
 
     this.data = {
-      s: [0],
-      v: [0],
-      t: [0],
+      s: [],
+      v: [],
+      t: [],
+      a: [],
     };
   }
 
-  show(dt = 1000 / 60) {
+  compute(dt = 1000 / 60) {
+    // establish initial conditions
     const a = g * Math.sin(initialAngle);
-    const sPrev = this.data.s[this.data.s.length - 1];
-    const vPrev = this.data.v[this.data.v.length - 1];
+    const t = [0];
+    const s = [0];
+    const v = [0];
 
-    const s = sPrev + vPrev * dt;
-    this.data.s.push(s);
-    this.data.v.push(vPrev + a * dt);
+    // total distance to travel
+    const R = h / Math.sin(initialAngle);
 
+    // create temp vars to hold previous state
+    let sPrev, vPrev, tPrev;
 
-    const x = s * Math.cos(initialAngle)
-    const y = h + s * Math.sin(initialAngle)
-    this.graphic.position.set(x, y)
+    // compute state for each moment in time
+    while (s[s.length - 1] * Math.cos(initialAngle) < WORLD_WIDTH) {
+      tPrev = t[t.length - 1];
+      vPrev = v[v.length - 1];
+      sPrev = s[s.length - 1];
+
+      t.push(tPrev + dt);
+      s.push(sPrev + vPrev * dt);
+      v.push(vPrev + a * dt);
+    }
+
+    this.data.t = t;
+    this.data.s = s;
+    this.data.v = v;
+    this.data.a = Array(t.length).fill(a);
+  }
+
+  animate() {
+    // constants
+    const a = g * Math.sin(initialAngle);
+    const s = this.data.s[i];
+    const v = this.data.v[i];
+    const t = this.data.t[i];
+
+    // move block
+    const x = s * Math.cos(initialAngle);
+    const y = h + s * Math.sin(initialAngle);
+    this.graphic.position.set(x, y);
+
+    // update plot
+    addData(pos, t, s);
+    addData(vel, t, v);
+    // we know acceleration is constant, so we only need two data points
+    if (i < 2) addData(acc, t, a);
+
+    i++;
   }
 
   remove() {
