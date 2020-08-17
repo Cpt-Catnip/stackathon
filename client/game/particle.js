@@ -1,5 +1,5 @@
 import { Graphics, Sprite } from 'pixi.js';
-import { app, WORLD_HEIGHT, WORLD_WIDTH, g, s_t, v_t } from './index';
+import { app, WORLD_HEIGHT, WORLD_WIDTH, g } from './index';
 import { pos, vel, acc, addData } from '../plotting';
 
 // closure
