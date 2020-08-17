@@ -1,6 +1,7 @@
 import { Chart } from 'chart.js';
 
 const options = {
+  elements: { line: { tension: 0 } },
   animation: {
     duration: 0, // general animation time
   },
@@ -36,7 +37,6 @@ export const pos = new Chart(document.getElementById('pos'), {
     datasets: [
       {
         data: [],
-        fill: false,
         borderColor: 'rgba(255, 99, 132, 1)',
         pointRadius: 0,
         lineTension: 0,
@@ -65,9 +65,9 @@ export const vel = new Chart(document.getElementById('vel'), {
     datasets: [
       {
         data: [],
-        fill: false,
         borderColor: 'rgba(255, 99, 132, 1)',
         pointRadius: 0,
+        lineTension: 0,
       },
     ],
   },
@@ -92,9 +92,9 @@ export const acc = new Chart(document.getElementById('acc'), {
     datasets: [
       {
         data: [],
-        fill: false,
         borderColor: 'rgba(255, 99, 132, 1)',
         pointRadius: 0,
+        lineTension: 0,
       },
     ],
   },
