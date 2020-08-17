@@ -28,9 +28,7 @@ export class Particle {
     // add sprite to world
     app.stage.addChild(this.graphic);
 
-    // math
-    // console.log(this.graphic.position)
-
+    // data
     this.data = {
       s: [],
       v: [],

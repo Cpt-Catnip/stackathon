@@ -112,10 +112,8 @@ export const acc = new Chart(document.getElementById('acc'), {
 
 export const addData = (chart, label, data) => {
   chart.data.labels.push(label);
-  // chart.data.labels = label;
   chart.data.datasets.forEach((dataset) => {
     dataset.data.push(data);
-    // dataset.data = data;
   });
   chart.update();
 };

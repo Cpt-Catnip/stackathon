@@ -1,15 +1,7 @@
-import {
-  app,
-  engine,
-  Particle,
-  Ground,
-  WORLD_HEIGHT,
-  WORLD_WIDTH,
-} from './game';
+import { app, Particle, Ground, WORLD_WIDTH } from './game';
 
 let particle;
 let ramp;
-let runner;
 let state;
 
 const setup = (rampAngle) => {
@@ -20,7 +12,7 @@ const setup = (rampAngle) => {
   // add ground
   ramp = new Ground(rampAngle);
 
-  // add particle
+  // add box
   particle = new Particle(rampAngle);
 
   // set game state
@@ -43,7 +35,7 @@ const animate = (delta) => {
   if (particle.graphic.position.x < WORLD_WIDTH) {
     particle.animate();
   } else {
-    particle.remove()
+    particle.remove();
     app.ticker.remove(gameLoop);
   }
 };
